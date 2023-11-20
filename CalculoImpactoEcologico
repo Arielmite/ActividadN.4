@@ -1,0 +1,117 @@
+import java.util.ArrayList;
+
+// Interfaz ImpactoEcologico
+interface ImpactoEcologico {
+    double obtenerImpactoEcologico();
+}
+
+// Clase Edificio
+class Edificio implements ImpactoEcologico {
+    private String nombre;
+    private int emisiones; // Atributo específico para el cálculo del impacto ecológico de edificios
+
+    // Constructor de la clase Edificio
+    public Edificio(String nombre, int emisiones) {
+        this.nombre = nombre;
+        this.emisiones = emisiones;
+    }
+
+    // Implementación del método de la interfaz
+    @Override
+    public double obtenerImpactoEcologico() {
+        // Cálculo específico para edificios
+        return emisiones * 0.7;
+    }
+
+    // Método para obtener el nombre del edificio
+    public String getNombre() {
+        return nombre;
+    }
+}
+
+// Clase Auto
+class Auto implements ImpactoEcologico {
+    private String modelo;
+    private int emisiones; // Atributo específico para el cálculo del impacto ecológico de autos
+
+    // Constructor de la clase Auto
+    public Auto(String modelo, int emisiones) {
+        this.modelo = modelo;
+        this.emisiones = emisiones;
+    }
+
+    // Implementación del método de la interfaz
+    @Override
+    public double obtenerImpactoEcologico() {
+        // Cálculo específico para autos
+        return emisiones * 0.5;
+    }
+
+    // Método para obtener el modelo del auto
+    public String getModelo() {
+        return modelo;
+    }
+}
+
+// Clase Bicicleta
+class Bicicleta implements ImpactoEcologico {
+    private String tipo;
+    private int emisiones; // Atributo específico para el cálculo del impacto ecológico de bicicletas
+
+    // Constructor de la clase Bicicleta
+    public Bicicleta(String tipo, int emisiones) {
+        this.tipo = tipo;
+        this.emisiones = emisiones;
+    }
+
+    // Implementación del método de la interfaz
+    @Override
+    public double obtenerImpactoEcologico() {
+        // Cálculo específico para bicicletas
+        return emisiones * 0.1;
+    }
+
+    // Método para obtener el tipo de bicicleta
+    public String getTipo() {
+        return tipo;
+    }
+}
+
+// Aplicación principal
+public class CalculoImpactoEcologico {
+    public static void main(String[] args) {
+        // Crear objetos de cada clase
+        Edificio edificio = new Edificio("Edificio A", 1000);
+        Auto auto = new Auto("Sedan", 200);
+        Bicicleta bicicleta = new Bicicleta("De montaña", 5);
+
+        // Crear ArrayList de ImpactoEcologico
+        ArrayList<ImpactoEcologico> listaImpactos = new ArrayList<>();
+        listaImpactos.add(edificio);
+        listaImpactos.add(auto);
+        listaImpactos.add(bicicleta);
+
+        // Iterar a través de la lista, invocando polimórficamente el método obtenerImpactoEcologico
+        for (ImpactoEcologico impacto : listaImpactos) {
+            // Imprimir información de identificación
+            System.out.println("Objeto: " + impacto.getClass().getSimpleName());
+            System.out.println("Identificación: " + obtenerIdentificacion(impacto));
+            // Imprimir impacto ecológico del carbono
+            System.out.println("Impacto ecológico del carbono: " + impacto.obtenerImpactoEcologico());
+            System.out.println();
+        }
+    }
+
+    // Método auxiliar para obtener información de identificación
+    private static String obtenerIdentificacion(ImpactoEcologico impacto) {
+        if (impacto instanceof Edificio) {
+            return ((Edificio) impacto).getNombre();
+        } else if (impacto instanceof Auto) {
+            return ((Auto) impacto).getModelo();
+        } else if (impacto instanceof Bicicleta) {
+            return ((Bicicleta) impacto).getTipo();
+        } else {
+            return "Identificación no disponible";
+        }
+    }
+}
